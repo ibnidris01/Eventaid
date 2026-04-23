@@ -30,7 +30,7 @@ router.post('/signup', async (req, res) => {
     const hashed = await bcrypt.hash(password, 10);
     db.run(`INSERT INTO users (name, email, password, role, phone, gender, address) 
             VALUES (?, ?, ?, ?, ?, ?, ?)`,
-        [name, email, hashed, role, phone, gender, address],j
+        [name, email, hashed, role, phone, gender, address],
         function(err) {
             if (err) return res.render('signup', { error: 'Email already exists', title: 'Sign Up' });
             res.redirect('/login');

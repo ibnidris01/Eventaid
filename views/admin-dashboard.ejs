@@ -1,0 +1,13 @@
+<%- include('partials/header', { title: title }) %>
+<%- include('partials/sidebar', { user: user }) %>
+    <div class="dashboard">
+        <h1>Admin Dashboard</h1>
+        <div class="stats-cards">
+            <div class="card"><h3>Tasks</h3><p><%= userCount %></p></div>
+            <div class="card"><h3>Hours</h3><p><%= eventCount %></p></div>
+            <div class="card"><h3>Planners</h3><p><%= plannerCount %></p></div>
+        </div>
+        <p>Total Hosts: <%= hostCount %></p>
+    </div>
+</main>
+<%- include('partials/footer') %>

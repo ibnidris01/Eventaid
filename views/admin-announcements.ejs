@@ -1,0 +1,23 @@
+<%- include('partials/header', { title: 'Manage Announcements' }) %>
+<%- include('partials/sidebar', { user: user }) %>
+<div class="admin-announcements">
+    <h1>Announcements</h1>
+    <form method="POST" action="/admin/announcements">
+        <input type="text" name="title" placeholder="Title" required>
+        <textarea name="content" placeholder="Announcement content..." required></textarea>
+        <button type="submit">Post Announcement</button>
+    </form>
+    <h2>Existing Announcements</h2>
+    <% announcements.forEach(a => { %>
+        <div class="announcement">
+            <h3><%= a.title %></h3>
+            <p><%= a.content %></p>
+            <small><%= new Date(a.created_at).toLocaleDateString() %></small>
+            <form method="POST" action="/admin/announcements/delete/<%= a.id %>" style="display:inline;">
+                <button type="submit" onclick="return confirm('Delete?')">Delete</button>
+            </form>
+        </div>
+    <% }) %>
+</div>
+</main>
+<%- include('partials/footer') %>

@@ -1,0 +1,42 @@
+<%- include('partials/header', { title: 'Proposal Details' }) %>
+<%- include('partials/sidebar', { user: user }) %>
+<div class="proposal-detail">
+    <div class="back-link">
+        <a href="/host/dashboard" class="btn-outline">← Back to Dashboard</a>
+        <% if (proposal.planner_id) { %>
+            <a href="/planner/public/<%= proposal.planner_id %>" class="btn-outline" target="_blank">📂 View Planner's Portfolio</a>
+        <% } %>
+    </div>
+    <div class="detail-card">
+        <h2>Proposal from <%= proposal.planner_name %></h2>
+        <div class="planner-info">
+            <% if (proposal.profile_pic) { %>
+                <img src="<%= proposal.profile_pic %>" alt="Profile" class="planner-avatar">
+            <% } else { %>
+                <div class="avatar-placeholder">📷</div>
+            <% } %>
+            <div>
+                <p><strong>Email:</strong> <%= proposal.planner_email %></p>
+                <p><strong>Phone:</strong> <%= proposal.planner_phone || 'Not provided' %></p>
+            </div>
+        </div>
+        <div class="proposal-info">
+            <p><strong>Event:</strong> <%= proposal.event_title %></p>
+            <p><strong>Date:</strong> <%= proposal.event_date %></p>
+            <p><strong>Location:</strong> <%= proposal.location %></p>
+            <p><strong>Proposed Amount:</strong> ₦<%= proposal.amount %></p>
+            <p><strong>Message from Planner:</strong></p>
+            <div class="message-box"><%= proposal.message %></div>
+        </div>
+        <div class="action-buttons">
+            <% if (proposal.status === 'pending') { %>
+                <a href="/host/proposal/<%= proposal.id %>/accept" class="btn-primary" onclick="return confirm('Accept this proposal?')">✅ Accept</a>
+                <a href="/host/proposal/<%= proposal.id %>/reject" class="btn-danger" onclick="return confirm('Reject this proposal?')">❌ Reject</a>
+            <% } else { %>
+                <p>Status: <strong><%= proposal.status %></strong></p>
+            <% } %>
+        </div>
+    </div>
+</div>
+</main>
+<%- include('partials/footer') %>

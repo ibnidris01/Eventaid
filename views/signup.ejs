@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>EventAid | Sign Up</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body style="font-family: 'Inter', sans-serif;">
+    <div class="auth-page">
+        <div class="auth-card-modern">
+            <div class="auth-logo">
+                <h1>EventAid ✨</h1>
+            </div>
+            <div class="auth-title">
+                <h2>Create Account</h2>
+                <p>Join as a Host or Planner</p>
+            </div>
+
+            <% if (error) { %>
+                <div class="error-message"><i class="fas fa-exclamation-circle"></i> <%= error %></div>
+            <% } %>
+
+            <form method="POST" action="/signup" id="signupForm">
+                <!-- Basic info -->
+                <div class="input-group-modern">
+                    <input type="text" name="name" id="name" placeholder=" " required>
+                    <label for="name">Full Name</label>
+                </div>
+                <div class="input-group-modern">
+                    <input type="email" name="email" id="email" placeholder=" " required>
+                    <label for="email">Email Address</label>
+                </div>
+                <div class="input-group-modern">
+                    <input type="tel" name="phone" id="phone" placeholder=" ">
+                    <label for="phone">Phone Number (optional)</label>
+                </div>
+                <div class="input-group-modern">
+                    <input type="text" name="address" id="address" placeholder=" ">
+                    <label for="address">Home Address</label>
+                </div>
+                <div class="input-group-modern">
+                    <select name="gender" id="gender">
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <label for="gender">Gender</label>
+                </div>
+                <div class="input-group-modern">
+                    <input type="date" name="dob" id="dob" placeholder=" ">
+                    <label for="dob">Date of Birth</label>
+                </div>
+                <div class="input-group-modern">
+                    <input type="password" name="password" id="password" placeholder=" " required>
+                    <label for="password">Password</label>
+                </div>
+                
+                <!-- Role selection -->
+                <div class="role-selector">
+                    <label>I am a:</label>
+                    <div class="role-buttons">
+                        <div class="role-btn active" data-role="host">
+                            <i class="fas fa-calendar-alt"></i> Host
+                        </div>
+                        <div class="role-btn" data-role="planner">
+                            <i class="fas fa-chalkboard-user"></i> Planner
+                        </div>
+                    </div>
+                    <input type="hidden" name="role" id="roleInput" value="host">
+                </div>
+
+                <button type="submit" class="btn-modern">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="/login">Login →</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Role selection toggle
+        const roleBtns = document.querySelectorAll('.role-btn');
+        const roleInput = document.getElementById('roleInput');
+        roleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                roleBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                roleInput.value = btn.dataset.role;
+            });
+        });
+    </script>
+</body>
+</html>

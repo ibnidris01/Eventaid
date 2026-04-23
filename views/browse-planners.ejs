@@ -1,0 +1,38 @@
+<%- include('partials/header', { title: title }) %>
+<%- include('partials/sidebar', { user: user }) %>
+<div class="browse-planners">
+    <div class="dashboard-header">
+        <h1>👥 Browse All Planners</h1>
+        <p>Explore portfolios of professional event planners</p>
+    </div>
+    
+    <div class="planners-grid">
+        <% if (planners && planners.length > 0) { %>
+            <% planners.forEach(planner => { %>
+                <div class="planner-card">
+                    <div class="planner-avatar">
+                        <% if (planner.profile_pic) { %>
+                            <img src="<%= planner.profile_pic %>" alt="<%= planner.name %>">
+                        <% } else { %>
+                            <div class="avatar-placeholder"><i class="fas fa-user-circle"></i></div>
+                        <% } %>
+                    </div>
+                    <div class="planner-info">
+                        <h3><%= planner.name %></h3>
+                        <p><i class="fas fa-envelope"></i> <%= planner.email %></p>
+                        <% if (planner.phone) { %>
+                            <p><i class="fas fa-phone"></i> <%= planner.phone %></p>
+                        <% } %>
+                    </div>
+                    <div class="planner-actions">
+                        <a href="/planner/public/<%= planner.id %>" class="btn-primary" target="_blank">📂 View Portfolio</a>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <div class="empty-state">No planners registered yet.</div>
+        <% } %>
+    </div>
+</div>
+</main>
+<%- include('partials/footer') %>

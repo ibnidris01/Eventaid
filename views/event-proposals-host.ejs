@@ -1,0 +1,20 @@
+<%- include('partials/header', { title: title }) %>
+<%- include('partials/sidebar', { user: user }) %>
+<div class="dashboard">
+    <div class="back-link">
+        <a href="/<%= user.role %>/dashboard" class="btn-outline">← Back to Dashboard</a>
+    </div>
+    <h2>Proposals Received</h2>
+    <ul>
+        <% proposals.forEach(p => { %>
+            <li><%= p.planner_name %> proposed $<%= p.amount %> for "<%= p.event_title %>" - Status: <%= p.status %>
+                <% if (p.status === 'pending') { %>
+                    <a href="/host/proposal/<%= p.id %>/accept">Accept</a>
+                    <a href="/host/proposal/<%= p.id %>/reject">Reject</a>
+                <% } %>
+            </li>
+        <% }) %>
+    </ul>
+</div>
+</main>
+<%- include('partials/footer') %>

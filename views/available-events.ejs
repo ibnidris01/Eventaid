@@ -1,0 +1,19 @@
+<%- include('partials/header', { title: title }) %>
+<%- include('partials/sidebar', { user: user }) %>
+<div class="dashboard">
+    <h2>Available Events</h2>
+    <% events.forEach(event => { %>
+        <div class="event-card">
+            <h3><%= event.title %></h3>
+            <p><%= event.event_date %> | <%= event.location %></p>
+            <form method="POST" action="/planner/submit-proposal">
+                <input type="hidden" name="event_id" value="<%= event.id %>">
+                <input type="number" name="amount" placeholder="Your price ($)" required>
+                <textarea name="message" placeholder="Message to host"></textarea>
+                <button type="submit">Submit Proposal</button>
+            </form>
+        </div>
+    <% }) %>
+</div>
+</main>
+<%- include('partials/footer') %>

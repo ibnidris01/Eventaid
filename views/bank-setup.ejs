@@ -1,0 +1,22 @@
+<%- include('partials/header', { title: 'Bank Account Setup' }) %>
+<%- include('partials/sidebar', { user: user }) %>
+<div class="form-container">
+    <h2>🏦 Receive Payments via Bank</h2>
+    <p>Set up your bank account so funds can be sent automatically after a host pays.</p>
+    <% if (error) { %><div class="error-message"><%= error %></div><% } %>
+    <% if (success) { %><div class="success-message"><%= success %></div><% } %>
+    <form method="POST" action="/planner/bank-setup">
+        <div class="input-group">
+            <label>Bank Code</label>
+            <input type="text" name="bank_code" placeholder="e.g., 058 (for Test Bank)" required>
+            <small>Find your bank code from Paystack's list (e.g., 058 = Test Bank, 057 = Zenith, etc.)</small>
+        </div>
+        <div class="input-group">
+            <label>Account Number</label>
+            <input type="text" name="account_number" placeholder="0001234567" required>
+        </div>
+        <button type="submit" class="btn">Save & Verify</button>
+    </form>
+</div>
+</main>
+<%- include('partials/footer') %>

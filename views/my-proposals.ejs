@@ -1,0 +1,12 @@
+<%- include('partials/header', { title: title }) %>
+<%- include('partials/sidebar', { user: user }) %>
+<div class="dashboard">
+    <h2>My Proposals</h2>
+    <ul>
+        <% proposals.forEach(p => { %>
+            <li>Event: <%= p.event_title %> | Amount: $<%= p.amount %> | Status: <%= p.status %></li>
+        <% }) %>
+    </ul>
+</div>
+</main>
+<%- include('partials/footer') %>

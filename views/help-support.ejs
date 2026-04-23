@@ -1,0 +1,37 @@
+<!-- <%- include('partials/header', { title: title }) %>
+<%- include('partials/sidebar', { user: user }) %>
+<div class="dashboard"><h2>Help & Support</h2><p>Contact us at support@eventaid.com for assistance.</p></div>
+</main>
+<%- include('partials/footer') %> -->
+
+<%- include('partials/header', { title: 'Help & Support' }) %>
+<%- include('partials/sidebar', { user: user }) %>
+<div class="help-container">
+    <h1>Help & Support</h1>
+    <% if (success) { %><div class="success-message"><%= success %></div><% } %>
+    
+    <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item"><strong>How do I create an event?</strong><p>Log in as Host, go to Dashboard → Create New Event.</p></div>
+        <div class="faq-item"><strong>How do I submit a proposal?</strong><p>Planners can browse available events and click "Submit Proposal".</p></div>
+        <div class="faq-item"><strong>How are payments handled?</strong><p>Payments are processed via Paystack. The platform takes a 10% commission.</p></div>
+    </div>
+
+    <div class="contact-form">
+        <h2>Contact Us</h2>
+        <form method="POST" action="/contact">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" rows="5" placeholder="Your message..." required></textarea>
+            <button type="submit" class="btn-primary">Send Message</button>
+        </form>
+    </div>
+</div>
+<style>
+.help-container { max-width: 800px; margin: 0 auto; }
+.faq-section, .contact-form { background: white; border-radius: 1.5rem; padding: 1.5rem; margin-bottom: 2rem; }
+.faq-item { margin-bottom: 1rem; }
+.contact-form input, .contact-form textarea { width: 100%; padding: 0.6rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 0.5rem; }
+</style>
+</main>
+<%- include('partials/footer') %>

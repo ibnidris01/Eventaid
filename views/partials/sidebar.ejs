@@ -1,0 +1,17 @@
+<aside class="sidebar">
+    <div class="logo">EventAid</div>
+    <ul>
+        <% if (user) { %>
+            <li><a href="/<%= user.role %>/dashboard">📊 Dashboard</a></li>
+        <% } %>
+        <li><a href="/get-account">Get Account</a></li>
+        <li><a href="/help-support">Help & Support</a></li>
+        <li><a href="/event-proposals">📋 Event Proposals</a></li>
+        <li><a href="/announcements">Announcement</a></li>
+        <li><a href="/referrer">Referrer</a></li>
+        <% if (user) { %>
+        <li><a href="/logout">Logout</a></li>
+        <% } %>
+    </ul>
+</aside>
+<main class="main-content">

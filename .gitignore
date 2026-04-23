@@ -1,0 +1,13 @@
+﻿node_modules/
+public/uploads/
+uploads/
+*.db
+*.sqlite
+*.sqlite3
+.env
+package-lock.json
+.DS_Store
+*.log
+.vscode/
+.idea/
+Thumbs.db

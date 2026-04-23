@@ -1,0 +1,16 @@
+<%- include('partials/header', { title: 'Upload Profile Picture' }) %>
+<%- include('partials/sidebar', { user: user }) %>
+<div class="form-container">
+    <h2>📸 Upload Profile Picture</h2>
+    <% if (error) { %><div class="error-message"><%= error %></div><% } %>
+    <form method="POST" action="/planner/profile-pic" enctype="multipart/form-data">
+        <div class="drag-drop">
+            <i class="fas fa-cloud-upload-alt fa-2x"></i>
+            <p>Click or drag to upload</p>
+            <input type="file" name="profilePic" accept="image/*" required>
+        </div>
+        <button type="submit" class="btn">Upload</button>
+    </form>
+</div>
+</main>
+<%- include('partials/footer') %>

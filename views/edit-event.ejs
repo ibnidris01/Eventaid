@@ -1,0 +1,36 @@
+<%- include('partials/header', { title: title }) %>
+<%- include('partials/sidebar', { user: user }) %>
+<div class="form-container">
+    <div class="back-link">
+        <a href="/host/dashboard" class="btn-outline">← Back to Dashboard</a>
+    </div>
+    <h2>✏️ Edit Event</h2>
+    <% if (error) { %><div class="error-message"><%= error %></div><% } %>
+    <form method="POST" action="/host/edit-event/<%= event.id %>">
+        <div class="input-group">
+            <label>Event Title</label>
+            <input type="text" name="title" value="<%= event.title %>" required>
+        </div>
+        <div class="input-group">
+            <label>Description</label>
+            <textarea name="description" rows="4"><%= event.description %></textarea>
+        </div>
+        <div class="form-row">
+            <div class="input-group">
+                <label>Event Date</label>
+                <input type="date" name="event_date" value="<%= event.event_date %>" required>
+            </div>
+            <div class="input-group">
+                <label>Location</label>
+                <input type="text" name="location" value="<%= event.location %>" required>
+            </div>
+        </div>
+        <div class="input-group">
+            <label>Budget (₦)</label>
+            <input type="number" name="budget" value="<%= event.budget %>">
+        </div>
+        <button type="submit" class="btn-primary">💾 Save Changes</button>
+    </form>
+</div>
+</main>
+<%- include('partials/footer') %>

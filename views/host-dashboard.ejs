@@ -1,0 +1,134 @@
+<%- include('partials/header', { title: title }) %>
+<%- include('partials/sidebar', { user: user }) %>
+<div class="dashboard host-dashboard">
+    <div class="dashboard-header">
+        <h1>👋 Welcome, <%= user.name %>!</h1>
+        <p>Manage your events, review proposals, and track payments.</p>
+    </div>
+
+    <!-- Flash messages -->
+    <% if (query && query.payment === 'success') { %>
+        <div class="success-message">✅ Payment successful! The planner has been notified.</div>
+    <% } else if (query && query.payment === 'failed') { %>
+        <div class="error-message">❌ Payment failed. Please try again.</div>
+    <% } else if (query && query.release === 'success') { %>
+        <div class="success-message">✅ Payment released to planner successfully!</div>
+    <% } %>
+
+    <!-- Stats cards -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">📅</div>
+            <div class="stat-number"><%= events ? events.length : 0 %></div>
+            <div class="stat-label">My Events</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📋</div>
+            <div class="stat-number"><%= proposals ? proposals.length : 0 %></div>
+            <div class="stat-label">Proposals Received</div>
+        </div>
+    </div>
+
+    <!-- Action button -->
+    <div class="action-buttons">
+        <a href="/host/create-event" class="btn-primary">➕ Create New Event</a>
+        <a href="/host/event-proposals" class="btn-outline">📄 All Proposals</a>
+        <a href="/host/browse-planners" class="btn-outline">👥 Browse Planners</a>
+    </div>
+
+    <!-- Your Events -->
+    <!-- Your Events -->
+<div class="events-section">
+    <h2>📌 Your Events</h2>
+    <% if (events && events.length > 0) { %>
+        <div class="events-list">
+            <% events.forEach(event => { %>
+                <div class="event-item">
+                    <div class="event-info">
+                        <strong><%= event.title %></strong>
+                        <span class="event-date"><%= event.event_date %></span>
+                        <span class="event-location"><%= event.location %></span>
+                    </div>
+                    <div class="event-actions">
+                        <a href="/host/edit-event/<%= event.id %>" class="edit-btn">✏️ Edit</a>
+                        <form method="POST" action="/host/delete-event/<%= event.id %>" style="display:inline;" onsubmit="return confirm('Delete this event and all its proposals?')">
+                            <button type="submit" class="delete-btn">🗑️ Delete</button>
+                        </form>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <div class="empty-state">✨ No events yet. Click "Create New Event" to get started.</div>
+    <% } %>
+</div>
+
+    <!-- Proposals Received -->
+    <div class="proposals-section">
+        <h2>📨 Proposals Received</h2>
+        <% if (proposals && proposals.length > 0) { %>
+            <div class="proposals-list">
+                <% proposals.forEach(p => { %>
+                    <div class="proposal-item">
+                        <div class="proposal-info">
+                            <strong><%= p.planner_name %></strong> proposed <strong>₦<%= p.amount %></strong> for "<%= p.event_title %>"
+                            <span class="proposal-status"><%= p.status %></span>
+                        </div>
+                        <div class="proposal-actions">
+                            <!-- View Details for EVERY proposal -->
+                            <a href="/host/proposal/<%= p.id %>" class="view-link">🔍 View Details</a>
+                            
+                            <% if (p.status === 'pending') { %>
+                                <!-- accept/reject are inside detail page -->
+                            <% } else if (p.status === 'accepted') { %>
+                                <% if (p.payment_status === 'paid') { %>
+                                    <% if (p.payment_released === 1) { %>
+                                        <span class="released-badge">✓ Released to Planner</span>
+                                    <% } else { %>
+                                        <form method="POST" action="/host/release-payment/<%= p.id %>" style="display:inline;" onsubmit="return confirm('Release payment to planner? This will transfer funds to their bank account.');">
+                                            <button type="submit" class="release-btn">💸 Release Payment</button>
+                                        </form>
+                                    <% } %>
+                                <% } else { %>
+                                    <button class="pay-btn" data-proposal-id="<%= p.id %>" data-amount="<%= p.amount %>" data-event="<%= p.event_title %>">💰 Pay Now</button>
+                                <% } %>
+                                <form method="POST" action="/host/delete-proposal/<%= p.id %>" style="display:inline;" onsubmit="return confirm('Delete this proposal?')">
+                                    <button type="submit" class="delete-btn">🗑️ Delete</button>
+                                </form>
+                            <% } else { %>
+                                <span class="rejected-badge"><%= p.status %></span>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <div class="empty-state">📭 No proposals received yet.</div>
+        <% } %>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.pay-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const proposalId = btn.dataset.proposalId;
+            const amount = btn.dataset.amount;
+            const eventTitle = btn.dataset.event;
+            if (confirm(`Pay ₦${amount} for "${eventTitle}"?`)) {
+                const response = await fetch(`/payment/initialize/${proposalId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const data = await response.json();
+                if (data.authorization_url) {
+                    window.location.href = data.authorization_url;
+                } else {
+                    alert('Payment failed: ' + (data.error || 'Unknown error'));
+                }
+            }
+        });
+    });
+</script>
+
+</main>
+<%- include('partials/footer') %>

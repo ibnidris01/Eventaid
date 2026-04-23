@@ -1,0 +1,22 @@
+<%- include('partials/header', { title: 'Announcements' }) %>
+<%- include('partials/sidebar', { user: user }) %>
+<div class="announcements-list">
+    <h1>📢 Platform Announcements</h1>
+    <% if (announcements && announcements.length > 0) { %>
+        <% announcements.forEach(a => { %>
+            <div class="announcement-card">
+                <h3><%= a.title %></h3>
+                <p><%= a.content %></p>
+                <small>Posted by <%= a.author %> on <%= new Date(a.created_at).toLocaleDateString() %></small>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <p>No announcements yet.</p>
+    <% } %>
+</div>
+<style>
+.announcements-list { max-width: 800px; margin: 0 auto; }
+.announcement-card { background: white; border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+</style>
+</main>
+<%- include('partials/footer') %>

@@ -1,17 +1,32 @@
-<aside class="sidebar">
-    <div class="logo">EventAid</div>
-    <ul>
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="logo">EventAid ✦</div>
+        <button class="close-btn" id="closeSidebar">✕</button>
+    </div>
+    <ul class="nav-menu">
         <% if (user) { %>
-            <li><a href="/<%= user.role %>/dashboard">📊 Dashboard</a></li>
+            <li><a href="/<%= user.role %>/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
         <% } %>
-        <li><a href="/get-account">Get Account</a></li>
-        <li><a href="/help-support">Help & Support</a></li>
-        <li><a href="/event-proposals">📋 Event Proposals</a></li>
-        <li><a href="/announcements">Announcement</a></li>
-        <li><a href="/referrer">Referrer</a></li>
+        <li><a href="/get-account"><i class="fas fa-user-circle"></i> Get Account</a></li>
+        <li><a href="/help-support"><i class="fas fa-question-circle"></i> Help & Support</a></li>
+        <li><a href="/event-proposals"><i class="fas fa-file-alt"></i> Event Proposals</a></li>
+        <li><a href="/announcements"><i class="fas fa-bullhorn"></i> Announcement</a></li>
+        <li><a href="/referrer"><i class="fas fa-share-alt"></i> Referrer</a></li>
+        <% if (user && user.role === 'host') { %>
+            <li><a href="/host/browse-planners"><i class="fas fa-users"></i> Browse Planners</a></li>
+        <% } %>
         <% if (user) { %>
-        <li><a href="/logout">Logout</a></li>
+            <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
         <% } %>
     </ul>
 </aside>
-<main class="main-content">
+
+<!-- Mobile menu button -->
+<button class="menu-btn" id="menuBtn">
+    <i class="fas fa-bars"></i>
+</button>
+
+<!-- Overlay for mobile -->
+<div class="overlay" id="overlay"></div>
+
+<main class="main-content" id="mainContent">
